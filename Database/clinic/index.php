@@ -4,8 +4,10 @@
  src="https://code.jquery.com/jquery-3.2.1.min.js"
  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
  crossorigin="anonymous"></script>
+
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
  
-<script src="./common.js"></script>
+<script src="/clinic/common.js"></script>
 
 <!-- Static navbar -->
 <nav class="navbar navbar-default">
@@ -25,6 +27,24 @@
  <li><a target="_parent" href="/clinic/Purchase/purchase_index.php">Purchase</a></li>
  <li><a target="_parent" href="/clinic/Prescription/prescription_index.php">Prescription</a></li>
  <li><a target="_parent" href="/clinic/Speciality/speciality_index.php">Speciality</a></li>
+
+ <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Querries <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <li><a href="/clinic/queries.php?switcher=a">QuerryA</a></li>
+      <li><a href="/clinic/queries.php?switcher=b">QuerryB</a></li>
+      <li><a href="/clinic/queries.php?switcher=c">QuerryC</a></li>
+      <li><a href="/clinic/queries.php?switcher=d">QuerryD</a></li>
+      <li><a href="/clinic/queries.php?switcher=e">QuerryE</a></li>
+      <li><a href="/clinic/queries.php?switcher=f">QuerryF</a></li>
+      <li><a href="/clinic/queries.php?switcher=g">QuerryG</a></li>
+      <li><a href="/clinic/queries.php?switcher=h">QuerryH</a></li>
+      <li><a href="/clinic/queries.php?switcher=i">QuerryI</a></li>
+      <li><a href="/clinic/queries.php?switcher=j">QuerryJ</a></li>
+      <li><a href="/clinic/queries.php?switcher=k">QuerryK</a></li>
+      <li><a href="/clinic/queries.php?switcher=l">QuerryL</a></li>
+    </ul>
+  </li>
  
  
 </ul>

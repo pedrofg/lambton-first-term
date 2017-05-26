@@ -2,15 +2,11 @@
 <html>
 <head>
 <title> Doctor Form </title>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
 </head>
 
+<div><?php include('../index.php'); ?></div>
+
 <body class="container well">
-
-<iframe id="iframe2" scrolling="no" name="myEntityList" src="../index.php" width="100%" frameborder="0" style="height:52px;"></iframe>
-
 <div class="container-fluid">
 <h3 >Doctors List</h3>
 	<iframe id="iframe" name="myPHPScript" src="view_doctors.php" width="100%" frameborder="0" style="height:300px;"></iframe>
