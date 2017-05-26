@@ -8,6 +8,9 @@ $table .= '		<td><a target="_parent" class="btn" style="text-decoration:none;" h
 $table .= '		<td><a target="_parent" class="btn" style="text-decoration:none;" href="/clinic/Patient_profile/patient_profile_index.php">Patient_profile</a></td>';
 $table .= '		<td><a target="_parent" class="btn" style="text-decoration:none;" href="/clinic/Pharmacist/pharmacist_index.php">Pharmacist</a></td>';
 $table .= '		<td><a target="_parent" class="btn" style="text-decoration:none;" href="/clinic/Pharmacy/pharmacy_index.php">Pharmacy</a></td>';
+$table .= '		<td><a target="_parent" class="btn" style="text-decoration:none;" href="/clinic/Prescription/prescription_index.php">Prescription</a></td>';
+$table .= '		<td><a target="_parent" class="btn" style="text-decoration:none;" href="/clinic/Purchase/purchase_index.php">Purchase</a></td>';
+$table .= '		<td><a target="_parent" class="btn" style="text-decoration:none;" href="/clinic/Speciality/speciality_index.php">Speciality</a></td>';
 $table .= '	</tr>';
 $table .= '</table>';
 
