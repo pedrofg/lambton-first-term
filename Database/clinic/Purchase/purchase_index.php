@@ -1,7 +1,11 @@
 <!DOCTYPE html>
+<?php
+	require '../connection.php';
+	$conn = Connect();
+?>	
 <html>
 <head>
-<title> Patient_profile Form </title>
+<title> Purchase Form </title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -23,23 +27,38 @@
 
 
 <div class="container-fluid">
-<h3 >Patient Profiles List</h3>
-	<iframe id="iframe" name="myPHPScript" src="view_patient_profiles.php" width="100%" frameborder="0" style="height:300px;"></iframe>
+<h3 >Purchases List</h3>
+	<iframe id="iframe" name="myPHPScript" src="view_purchases.php" width="100%" frameborder="0" style="height:300px;"></iframe>
 </div>
 
-<form action="add_patient_profile.php" method="post" class="form-horizontal">
+<form action="add_purchase.php" method="post" class="form-horizontal">
 
-	<h3> Add Patient Profile</h3>
+	<h3> Add Purchase</h3>
 	<div class="form-group">
 		<div class="col-sm-2">
-			<label class="control-label" for="appointment_id">Appointment_id:</label>
+			<label class="control-label" for="pharmacy_id">Pharmacy_id:</label>
 		</div>
 		<div class="col-sm-2">
 			<?php
-				require '../connection.php';
-				$conn = Connect();
-				$result = $conn->query('SELECT id FROM appointment order by id desc;');
-				echo '<select name="appointment_id">';
+				$result = $conn->query('SELECT id,name FROM pharmacy order by id desc;');
+				echo '<select name="pharmacy_id">';
+
+				while ($row = $result->fetch_assoc()) {
+					echo "<option value=$row[id]>$row[name]</option>";
+				}
+				echo "</select></div>";
+			?>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-2">
+			<label class="control-label" for="prescription_id">Prescription_id:</label>
+		</div>
+		<div class="col-sm-2">
+			<?php
+				$result = $conn->query('SELECT id FROM prescription order by id desc;');
+				echo '<select name="prescription_id">';
 
 				while ($row = $result->fetch_assoc()) {
 					echo "<option value=$row[id]>$row[id]</option>";
@@ -49,15 +68,7 @@
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	<div class="form-group">
-		<div class="col-sm-2">
-			<label class="control-label" for="notes">Notes:</label>
-		</div>
-		<div class="col-sm-2">
-			<input type="text" name="notes"><br>
-		</div>
-		<div class="clearfix"></div>
-	</div>
+
 	<div class="form-group">
 		<div class="col-sm-2">
 			<label class="control-label" for="date">Date:</label>
@@ -67,6 +78,7 @@
 		</div>
 		<div class="clearfix"></div>
 	</div>
+
 	<div class="form-group">
 		<div class="col-sm-2">
 			<label class="control-label" for="time">Time:</label>

@@ -46,10 +46,23 @@
 		<label class="control-label col-sm-1" for="qualification">Qualification:</label>
 		<input type="text" name="qualification"><br>
 	</div>
-	<div class="form-group">
+	<?php
+		require '../connection.php';
+		$conn = Connect();
+		$result = $conn->query('SELECT id, name FROM speciality order by name;');
+		echo '<div class="form-group">
+		<label class="control-label col-sm-1" for="speciality_id">Speciality:</label>
+		<select name="speciality_id">';
+
+		while ($row = $result->fetch_assoc()) {
+			echo "<option value=$row[id]>$row[name]</option>";
+		}
+		echo "</select></div>";
+	?>
+	<!-- <div class="form-group">
 		<label class="control-label col-sm-1" for="speciality_id">Speciality_Id:</label>
 		<input type="text" name="speciality_id"><br>
-	</div>
+	</div> -->
 
 	<div class="form-group">
 		<input type="submit" value="Submit" class="col-sm-offset-1"><br>

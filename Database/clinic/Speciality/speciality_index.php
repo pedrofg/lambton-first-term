@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title> Pharmacy Form </title>
+<title> Speciality Form </title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -24,12 +24,12 @@
 
 <div class="container-fluid">
 <h3 >Pharmacies List</h3>
-	<iframe id="iframe" name="myPHPScript" src="view_pharmacies.php" width="100%" frameborder="0" style="height:300px;"></iframe>
+	<iframe id="iframe" name="myPHPScript" src="view_specialities.php" width="100%" frameborder="0" style="height:300px;"></iframe>
 </div>
 
-<form action="add_pharmacy.php" method="post" class="form-horizontal">
+<form action="add_speciality.php" method="post" class="form-horizontal">
 
-	<h3> Add Pharmacy</h3>
+	<h3> Add Speciality</h3>
 	<div class="form-group">
 		<div class="col-sm-2">
 			<label class="control-label" for="name">Name:</label>
@@ -41,20 +41,10 @@
 	</div>
 	<div class="form-group">
 		<div class="col-sm-2">
-			<label class="control-label" for="pharmacist_id    ">Pharmacist_id:</label>
+			<label class="control-label" for="desc">Desc:</label>
 		</div>
 		<div class="col-sm-2">
-			<?php
-				require '../connection.php';
-				$conn = Connect();
-				$result = $conn->query('SELECT id,name FROM pharmacist order by name;');
-				echo '<select name="pharmacist_id">';
-
-				while ($row = $result->fetch_assoc()) {
-					echo "<option value=$row[id]>$row[name]</option>";
-				}
-				echo "</select></div>";
-			?>
+			<input type="text" name="desc"><br>
 		</div>
 		<div class="clearfix"></div>
 	</div>

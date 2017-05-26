@@ -4,7 +4,7 @@ require '../connection.php';
 $conn = Connect();
 
 $table = "";
-if ($result = $conn->query('SELECT * FROM pharmacy order by id desc;')) {
+if ($result = $conn->query('SELECT ph.id, ph.name, pcst.name as Pharmacist FROM pharmacy ph left join pharmacist pcst on ph.pharmacist_id = pcst.id order by id desc;')) {
     // create the table header row
     $fieldsInfo = $result->fetch_fields();
     $table .= "<table class='table table-inverse' style='width: 100%;'>";

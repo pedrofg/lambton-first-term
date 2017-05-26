@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<?php 
+<?php
 	require '../connection.php';
 	$conn = Connect();
-?>
+?>			
 <html>
 <head>
-<title> Appointment Form </title>
+<title> Prescription Form </title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -26,50 +26,44 @@
 </div>
 
 <div class="container-fluid">
-<h3 >Appointments List</h3>
-	<iframe id="iframe" name="myPHPScript" src="view_appointments.php" width="100%" frameborder="0" style="height:300px;"></iframe>
+<h3 >Prescriptions List</h3>
+	<iframe id="iframe" name="myPHPScript" src="view_prescriptions.php" width="100%" frameborder="0" style="height:300px;"></iframe>
 </div>
 
-<form action="add_appointment.php" method="post" class="form-horizontal">
+<form action="add_prescription.php" method="post" class="form-horizontal">
 
-	<h3> Add Appointment</h3>
+	<h3> Add Prescription</h3>
 	<div class="form-group">
-		<label class="control-label col-sm-1" for="doctor_id">Doctor_id:</label>
+		<label class="control-label col-sm-1" for="dosage">Dosage:</label>
+		<input type="text" name="dosage"><br>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-sm-1" for="frequency">Frequency:</label>
+		<input type="text" name="frequency"><br>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-sm-1" for="appointment_id">Appointment_id:</label>
 		<?php
-			$result = $conn->query('SELECT id, name FROM doctor order by name;');
-			echo '
-			<select name="doctor_id">';
+			$result = $conn->query('SELECT id FROM appointment order by id desc;');
+			echo '<select name="appointment_id">';
+
+			while ($row = $result->fetch_assoc()) {
+				echo "<option value=$row[id]>$row[id]</option>";
+			}
+			echo "</select></div>";
+		?>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-sm-1" for="medication_id">Medication_id:</label>
+		<?php
+			$result = $conn->query('SELECT id,name FROM medication order by id desc;');
+			echo '<select name="medication_id">';
 
 			while ($row = $result->fetch_assoc()) {
 				echo "<option value=$row[id]>$row[name]</option>";
 			}
 			echo "</select></div>";
 		?>
-	</div>
-	<div class="form-group">
-		<label class="control-label col-sm-1" for="patient_id">Patient_id:</label>
-		<?php
-			$result = $conn->query('SELECT id, name FROM patient order by name;');
-			echo '
-			<select name="patient_id">';
-
-			while ($row = $result->fetch_assoc()) {
-				echo "<option value=$row[id]>$row[name]</option>";
-			}
-			echo "</select></div>";
-		?>
-	</div>
-	<div class="form-group">
-		<label class="control-label col-sm-1" for="notes">Notes:</label>
-		<input type="text" name="notes"><br>
-	</div>
-	<div class="form-group">
-		<label class="control-label col-sm-1" for="date">Date:</label>
-		<input type="date" name="date"><br>
-	</div>
-	<div class="form-group">
-		<label class="control-label col-sm-1" for="time">Time:</label>
-		<input type="time" name="time"><br>
 	</div>
 
 	<div class="form-group">
