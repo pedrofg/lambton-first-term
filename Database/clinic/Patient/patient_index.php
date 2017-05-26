@@ -5,21 +5,12 @@
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-
-  <script src="./common.js"></script>
-
 </head>
 
 <body class="container well">
 
-<div class="container-fluid">
-<h3 >Select an Entity</h3>
-	<iframe id="iframe" name="myEntityList" src="../index.php" width="100%" frameborder="0" style="height:35px; border: 1px solid"></iframe>
-</div>
+	<iframe id="iframe2" scrolling="no" name="myEntityList" src="../index.php" width="100%" frameborder="0" style="height:52px;"></iframe>
+
 
 
 <div class="container-fluid">
