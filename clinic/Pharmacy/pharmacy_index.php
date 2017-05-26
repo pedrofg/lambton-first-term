@@ -16,6 +16,11 @@
 
 <body class="container well">
 
+<div class="container-fluid">
+<h3 >Select an Entity</h3>
+	<iframe id="iframe" name="myEntityList" src="../index.php" width="100%" frameborder="0" style="height:35px; border: 1px solid"></iframe>
+</div>
+
 
 <div class="container-fluid">
 <h3 >Pharmacies List</h3>
