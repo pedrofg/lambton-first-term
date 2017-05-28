@@ -4,7 +4,7 @@ require '../connection.php';
 $conn = Connect();
 
 $table = "";
-if ($result = $conn->query('SELECT * FROM appointment order by id desc;')) {
+if ($result = $conn->query('SELECT app.id, app.notes, app.date_time, d.name as Doctor, p.name as Patient FROM appointment app left join doctor d on app.doctor_id = d.id left join patient p on app.patient_id = p.id order by id desc;')) {
     // create the table header row
     $fieldsInfo = $result->fetch_fields();
     $table .= "<table class='table table-inverse' style='width: 100%;'>";

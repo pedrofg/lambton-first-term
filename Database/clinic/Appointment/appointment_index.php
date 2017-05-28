@@ -1,25 +1,15 @@
 <!DOCTYPE html>
+<?php 
+	require '../connection.php';
+	$conn = Connect();
+?>
 <html>
 <head>
 <title> Appointment Form </title>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-
-  <script src="./common.js"></script>
-
 </head>
 
+<div><?php include('../index.php'); ?></div>
 <body class="container well">
-
-<div class="container-fluid">
-<h3 >Select an Entity</h3>
-	<iframe id="iframe" name="myEntityList" src="../index.php" width="100%" frameborder="0" style="height:35px; border: 1px solid"></iframe>
-</div>
 
 <div class="container-fluid">
 <h3 >Appointments List</h3>
@@ -31,11 +21,29 @@
 	<h3> Add Appointment</h3>
 	<div class="form-group">
 		<label class="control-label col-sm-1" for="doctor_id">Doctor_id:</label>
-		<input type="text" name="doctor_id"><br>
+		<?php
+			$result = $conn->query('SELECT id, name FROM doctor order by name;');
+			echo '
+			<select name="doctor_id">';
+
+			while ($row = $result->fetch_assoc()) {
+				echo "<option value=$row[id]>$row[name]</option>";
+			}
+			echo "</select></div>";
+		?>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-sm-1" for="patient_id">Patient_id:</label>
-		<input type="text" name="patient_id"><br>
+		<?php
+			$result = $conn->query('SELECT id, name FROM patient order by name;');
+			echo '
+			<select name="patient_id">';
+
+			while ($row = $result->fetch_assoc()) {
+				echo "<option value=$row[id]>$row[name]</option>";
+			}
+			echo "</select></div>";
+		?>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-sm-1" for="notes">Notes:</label>

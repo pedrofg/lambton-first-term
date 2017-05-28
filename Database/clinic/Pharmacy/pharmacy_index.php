@@ -2,25 +2,10 @@
 <html>
 <head>
 <title> Pharmacy Form </title>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-
-  <script src="./common.js"></script>
-
 </head>
 
+<div><?php include('../index.php'); ?></div>
 <body class="container well">
-
-<div class="container-fluid">
-<h3 >Select an Entity</h3>
-	<iframe id="iframe" name="myEntityList" src="../index.php" width="100%" frameborder="0" style="height:35px; border: 1px solid"></iframe>
-</div>
-
 
 <div class="container-fluid">
 <h3 >Pharmacies List</h3>
@@ -41,10 +26,20 @@
 	</div>
 	<div class="form-group">
 		<div class="col-sm-2">
-			<label class="control-label" for="pharmacist_id">Pharmacist_id:</label>
+			<label class="control-label" for="pharmacist_id    ">Pharmacist_id:</label>
 		</div>
 		<div class="col-sm-2">
-			<input type="text" name="pharmacist_id"><br>
+			<?php
+				require '../connection.php';
+				$conn = Connect();
+				$result = $conn->query('SELECT id,name FROM pharmacist order by name;');
+				echo '<select name="pharmacist_id">';
+
+				while ($row = $result->fetch_assoc()) {
+					echo "<option value=$row[id]>$row[name]</option>";
+				}
+				echo "</select></div>";
+			?>
 		</div>
 		<div class="clearfix"></div>
 	</div>

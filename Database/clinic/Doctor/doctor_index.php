@@ -2,26 +2,11 @@
 <html>
 <head>
 <title> Doctor Form </title>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-
-  <script src="./common.js"></script>
-
 </head>
 
+<div><?php include('../index.php'); ?></div>
+
 <body class="container well">
-
-<div class="container-fluid">
-<h3 >Select an Entity</h3>
-	<iframe id="iframe" name="myEntityList" src="../index.php" width="100%" frameborder="0" style="height:35px; border: 1px solid"></iframe>
-</div>
-
-
 <div class="container-fluid">
 <h3 >Doctors List</h3>
 	<iframe id="iframe" name="myPHPScript" src="view_doctors.php" width="100%" frameborder="0" style="height:300px;"></iframe>
@@ -46,10 +31,23 @@
 		<label class="control-label col-sm-1" for="qualification">Qualification:</label>
 		<input type="text" name="qualification"><br>
 	</div>
-	<div class="form-group">
+	<?php
+		require '../connection.php';
+		$conn = Connect();
+		$result = $conn->query('SELECT id, name FROM speciality order by name;');
+		echo '<div class="form-group">
+		<label class="control-label col-sm-1" for="speciality_id">Speciality:</label>
+		<select name="speciality_id">';
+
+		while ($row = $result->fetch_assoc()) {
+			echo "<option value=$row[id]>$row[name]</option>";
+		}
+		echo "</select></div>";
+	?>
+	<!-- <div class="form-group">
 		<label class="control-label col-sm-1" for="speciality_id">Speciality_Id:</label>
 		<input type="text" name="speciality_id"><br>
-	</div>
+	</div> -->
 
 	<div class="form-group">
 		<input type="submit" value="Submit" class="col-sm-offset-1"><br>
