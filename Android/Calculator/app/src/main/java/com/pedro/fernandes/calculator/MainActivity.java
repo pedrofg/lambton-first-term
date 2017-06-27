@@ -16,7 +16,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     //Declaring the views defined in the activity_main.xml file to be used in the activity.
-    private TextView txtOperations, txtResult;
+    private TextView txtOperations, txtResult, txtResultTemporary;
 
     //Declaring the lists to do the calculator math.
     //listValues stores the double values. e.g. [1.5, 20, 4.8]
@@ -45,20 +45,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnSum:
-                addValue();
-                addOperator("+");
+                if (addValue())
+                    addOperator("+");
                 break;
             case R.id.btnSub:
-                addValue();
-                addOperator("-");
+                if (addValue())
+                    addOperator("-");
                 break;
             case R.id.btnSplit:
-                addValue();
-                addOperator("/");
+                if (addValue())
+                    addOperator("/");
                 break;
             case R.id.btnTimes:
-                addValue();
-                addOperator("*");
+                if (addValue())
+                    addOperator("*");
                 break;
             case R.id.btnDot:
                 addDot();
@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 backspace();
                 break;
             default:
+                this.txtResultTemporary.setText("");
+                showTxtResult();
                 String btnText = ((Button) view).getText().toString();
                 this.txtResult.setText(String.format("%s%s", getText(this.txtResult), btnText));
                 break;
@@ -108,7 +110,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
 
-            this.txtResult.setText(String.format("%s", finalValue));
+            this.txtResultTemporary.setText(String.format("%s", finalValue));
+            showTxtResultTemp();
             clear(true);
         }
     }
@@ -133,14 +136,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //Add value to the values array. The value comes from the TextView (txtResult) and then converted to double.
     //Add the value to the TextView showing the whole math.
-    private void addValue() {
+    private boolean addValue() {
         String textLastNumber = getText(this.txtResult);
         if (!textLastNumber.isEmpty()) {
             double lastNumber = Double.valueOf(getText(this.txtResult));
             this.listValues.add(lastNumber);
 
             this.txtOperations.setText(String.format("%s%s", this.txtOperations.getText().toString(), lastNumber));
+            return true;
         }
+
+        return false;
     }
 
     //Add operator to the operator list, add operator to the TextView showing the whole math,
@@ -159,17 +165,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.txtOperations.setText("");
         this.listValues.clear();
         this.listOperators.clear();
+        this.txtResult.setText("");
 
         if (!keepResult)
-            this.txtResult.setText("");
+            this.txtResultTemporary.setText("");
     }
 
     //Add a dot to the TextView of the current operation if there was no dot inserted.
     private void addDot() {
         String actualValue = getText(this.txtResult);
         if (!actualValue.contains(".")) {
+            if (actualValue.isEmpty()) {
+                this.txtResult.setText("0");
+            }
             this.txtResult.setText(String.format("%s.", getText(this.txtResult)));
+            showTxtResult();
         }
+    }
+
+    //Show the textview which shows the value that the user is typing and hide the final result textview.
+    private void showTxtResult() {
+        this.txtResult.setVisibility(View.VISIBLE);
+        this.txtResultTemporary.setVisibility(View.GONE);
+    }
+
+    //Show the final result textview and hide the textview which shows the user operation.
+    private void showTxtResultTemp() {
+        this.txtResult.setVisibility(View.GONE);
+        this.txtResultTemporary.setVisibility(View.VISIBLE);
     }
 
     //return the String value of a TextView.
@@ -182,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void bindViews() {
         this.txtOperations = (TextView) findViewById(R.id.txtOperations);
         this.txtResult = (TextView) findViewById(R.id.txtResult);
+        this.txtResultTemporary = (TextView) findViewById(R.id.txtResultTemporary);
 
         Button btnSum = (Button) findViewById(R.id.btnSum);
         Button btnSub = (Button) findViewById(R.id.btnSub);
