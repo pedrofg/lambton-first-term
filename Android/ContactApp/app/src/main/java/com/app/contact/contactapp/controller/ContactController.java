@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.app.contact.contactapp.data.DBHelper;
+import com.app.contact.contactapp.exceptions.EmailMaxLenghtReached;
+import com.app.contact.contactapp.exceptions.NameMaxLenghtReached;
+import com.app.contact.contactapp.exceptions.PhoneMaxLenghtReached;
 import com.app.contact.contactapp.model.Contact;
 import com.app.contact.contactapp.model.DeletedContact;
 
@@ -34,7 +37,8 @@ public class ContactController {
         this.context = context;
     }
 
-    public long insert(Contact contact) {
+    public long insert(Contact contact) throws EmailMaxLenghtReached, PhoneMaxLenghtReached, NameMaxLenghtReached {
+        validate(contact);
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Contact.ContactEntry.COLUMN_NAME, contact.getName());
@@ -49,7 +53,8 @@ public class ContactController {
         return rowId;
     }
 
-    public long update(Contact contact) {
+    public long update(Contact contact) throws EmailMaxLenghtReached, PhoneMaxLenghtReached, NameMaxLenghtReached {
+        validate(contact);
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Contact.ContactEntry.COLUMN_NAME, contact.getName());
@@ -143,5 +148,19 @@ public class ContactController {
 
         cursor.close();
         return contactList;
+    }
+
+    public void validate(Contact contact) throws NameMaxLenghtReached, EmailMaxLenghtReached, PhoneMaxLenghtReached {
+        if (contact.getName().length() > Contact.ContactEntry.MAX_NAME_LENGTH) {
+            throw new NameMaxLenghtReached();
+        }
+
+        if (contact.getEmail().length() > Contact.ContactEntry.MAX_EMAIL_LENGTH) {
+            throw new EmailMaxLenghtReached();
+        }
+
+        if (contact.getPhone().length() > Contact.ContactEntry.MAX_PHONE_LENGTH) {
+            throw new PhoneMaxLenghtReached();
+        }
     }
 }

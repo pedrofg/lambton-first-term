@@ -52,6 +52,10 @@ public class Contact {
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_PHONE = "phone";
         public static final String COLUMN_EMAIL = "email";
+
+        public static final int MAX_NAME_LENGTH = 50;
+        public static final int MAX_EMAIL_LENGTH = 50;
+        public static final int MAX_PHONE_LENGTH = 10;
     }
 
     public static final String SQL_CREATE_TABLE =
