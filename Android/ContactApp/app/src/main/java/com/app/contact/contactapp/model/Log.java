@@ -59,5 +59,6 @@ public class Log {
                     LogEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     LogEntry.COLUMN_CONTACT_ID + " INTEGER," +
                     LogEntry.COLUMN_STATUS + " TEXT," +
-                    LogEntry.COLUMN_DATE + " TEXT)";
+                    LogEntry.COLUMN_DATE + " TEXT," +
+                    " FOREIGN KEY(" + LogEntry.COLUMN_CONTACT_ID + ") REFERENCES " + Contact.ContactEntry.TABLE_NAME + "(" + Contact.ContactEntry._ID + "))";
 }

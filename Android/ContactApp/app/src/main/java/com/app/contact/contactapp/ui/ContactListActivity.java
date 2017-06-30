@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.app.contact.contactapp.R;
 import com.app.contact.contactapp.controller.ContactController;
+import com.app.contact.contactapp.controller.LogController;
 import com.app.contact.contactapp.model.Contact;
+import com.app.contact.contactapp.model.Log;
 
 import java.util.List;
 
@@ -24,23 +26,13 @@ public class ContactListActivity extends AppCompatActivity {
         contact.setName("PedroGF");
 
         long id = getInstance(this).insert(contact);
+        contact.setId((int) id);
 
-        contact = ContactController.getInstance(this).find((int) id);
 
-        contact.setEmail("changed@gmail.com");
+        ContactController.getInstance(this).delete(contact);
 
-        id = getInstance(this).insert(contact);
+        List<Contact> allDeletedContact = ContactController.getInstance(this).findAllDeletedContact();
 
-        List<Contact> contactList = ContactController.getInstance(this).findAll();
-
-//        ContactController.getInstance(this).update(contact);
-//
-//        contact = ContactController.getInstance(this).find((int) id);
-//
-//        Log.i("test", contact.getEmail());
-//
-//        ContactController.getInstance(this).delete(contact.getId());
-//
-//        contact = ContactController.getInstance(this).find((int) id);
+        List<Log> all = LogController.getInstance(this).findAll();
     }
 }

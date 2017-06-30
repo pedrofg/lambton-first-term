@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.app.contact.contactapp.model.Contact;
+import com.app.contact.contactapp.model.DeletedContact;
 import com.app.contact.contactapp.model.Log;
 
 
@@ -25,12 +26,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(Contact.SQL_CREATE_TABLE);
         db.execSQL(Log.SQL_CREATE_TABLE);
+        db.execSQL(DeletedContact.SQL_CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + Contact.ContactEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + Log.LogEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DeletedContact.DeletedContactEntry.TABLE_NAME);
         onCreate(db);
     }
 }

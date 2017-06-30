@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.app.contact.contactapp.data.DBHelper;
 import com.app.contact.contactapp.model.Contact;
+import com.app.contact.contactapp.model.DeletedContact;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +84,7 @@ public class ContactController {
     public Contact find(int id) {
         Contact contact = null;
         SQLiteDatabase db = this.dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Contact.ContactEntry.TABLE_NAME + " where " + Contact.ContactEntry._ID + " = " + id, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Contact.ContactEntry.TABLE_NAME + " WHERE " + Contact.ContactEntry._ID + " = " + id, null);
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
@@ -104,14 +105,43 @@ public class ContactController {
         return contact;
     }
 
-    public long delete(int id) {
+    public long delete(Contact contact) {
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();
-        int rowId = db.delete(Contact.ContactEntry.TABLE_NAME, Contact.ContactEntry._ID + " = ? ", new String[]{Integer.toString(id)});
 
-        if (rowId >= 0) {
-            LogController.getInstance(this.context).insert(rowId, LogController.LogStatus.DELETED);
+        int wasDeleted = db.delete(Contact.ContactEntry.TABLE_NAME, Contact.ContactEntry._ID + " = ? ", new String[]{Integer.toString(contact.getId())});
+
+        if (wasDeleted >= 0) {
+            insertDeletedContact(contact);
+            LogController.getInstance(this.context).insert(contact.getId(), LogController.LogStatus.DELETED);
         }
 
-        return rowId;
+        return wasDeleted;
+    }
+
+    private long insertDeletedContact(Contact contact) {
+        SQLiteDatabase db = this.dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Contact.ContactEntry.COLUMN_NAME, contact.getName());
+        values.put(Contact.ContactEntry.COLUMN_PHONE, contact.getPhone());
+        values.put(Contact.ContactEntry.COLUMN_EMAIL, contact.getEmail());
+
+        return db.insert(DeletedContact.DeletedContactEntry.TABLE_NAME, null, values);
+    }
+
+    public List<Contact> findAllDeletedContact() {
+        List<Contact> contactList = new ArrayList<>();
+        SQLiteDatabase db = this.dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DeletedContact.DeletedContactEntry.TABLE_NAME, null);
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            contactList.add(makeContact(cursor));
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        return contactList;
     }
 }
