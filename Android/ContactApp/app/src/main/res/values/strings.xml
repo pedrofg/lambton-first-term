@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ContactApp</string>
+    <string name="search_hint">Type contact info.</string>
+    <string name="search">Search</string>
 </resources>

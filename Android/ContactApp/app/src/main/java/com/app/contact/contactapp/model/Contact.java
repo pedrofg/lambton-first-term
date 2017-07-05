@@ -8,6 +8,8 @@ import static com.app.contact.contactapp.model.Contact.ContactEntry.TABLE_NAME;
  * Created by Pedro on 2017-06-29.
  */
 
+//Contact POJO class to represent the model. It has 4 attributes as the requirements asked for.
+// All the attributes have getters and setters which are used in the App logic.
 public class Contact {
 
     private int id;
@@ -47,6 +49,7 @@ public class Contact {
         this.email = email;
     }
 
+    //Create a static class to represents the database values, table name, column names and validations of size.
     public static class ContactEntry implements BaseColumns {
         public static final String TABLE_NAME = "contact";
         public static final String COLUMN_NAME = "name";
@@ -58,6 +61,8 @@ public class Contact {
         public static final int MAX_PHONE_LENGTH = 10;
     }
 
+    //This class also has the create table query to be run by the database.
+    //Id in this case is the primary key and auto increment so the database will set this value when inserted.
     public static final String SQL_CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME + " (" +
                     ContactEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +

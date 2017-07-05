@@ -3,23 +3,22 @@ package com.app.contact.contactapp.controller;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.app.contact.contactapp.data.DBHelper;
 import com.app.contact.contactapp.model.Log;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 /**
  * Created by Pedro on 2017-06-29.
  */
 
+//Log Controller is the Controller in the MVC pattern. It is responsible to all the Log operations that involves database and business logic.
 public class LogController {
+    //LogStatus enum is created to maintain the data integrity when the status is sent to the database as Text.
     public enum LogStatus {
         INSERTED, UPDATED, DELETED;
     }
@@ -27,6 +26,7 @@ public class LogController {
     private static LogController instance = null;
     private DBHelper dbHelper;
 
+    //LogController is a singleton since just one instance is needed.
     public static LogController getInstance(Context context) {
         if (instance == null) {
             instance = new LogController(context);
@@ -34,10 +34,12 @@ public class LogController {
         return instance;
     }
 
+    //Constructor receives the context and instantiate the DBHelper object to communicate with the database.
     public LogController(Context context) {
         this.dbHelper = new DBHelper(context);
     }
 
+    //Creates the Log object using the parameters and insert into the database using the DBHelper object.
     public long insert(int contactId, LogStatus logStatus) {
         Log log = new Log();
         log.setContactId(contactId);
@@ -52,31 +54,7 @@ public class LogController {
         return db.insert(Log.LogEntry.TABLE_NAME, null, contentValues);
     }
 
-    public List<Log> findAll() {
-        List<Log> logList = new ArrayList<>();
-        SQLiteDatabase db = this.dbHelper.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Log.LogEntry.TABLE_NAME, null);
-        cursor.moveToFirst();
-
-        while (!cursor.isAfterLast()) {
-            logList.add(makeLog(cursor));
-            cursor.moveToNext();
-        }
-
-        cursor.close();
-        return logList;
-    }
-
-    private Log makeLog(Cursor cursor) {
-        Log log = new Log();
-        log.setId(cursor.getInt(cursor.getColumnIndex(Log.LogEntry._ID)));
-        log.setContactId(cursor.getInt(cursor.getColumnIndex(Log.LogEntry.COLUMN_CONTACT_ID)));
-        log.setStatus(cursor.getString(cursor.getColumnIndex(Log.LogEntry.COLUMN_STATUS)));
-        log.setDate(cursor.getString(cursor.getColumnIndex(Log.LogEntry.COLUMN_DATE)));
-        return log;
-    }
-
+    //Get the current date and time, format it to be inserted as the Log date into the database.
     private String getDateTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
